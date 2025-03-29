@@ -46,16 +46,6 @@ st7789_conf_t st7789_conf = {
     .spi_host = SPI2_HOST,
 
 };
-void powertask(void *p)
-{
-    for (;;)
-    {
-        st7789_off(&st7789_conf);
-        vTaskDelay(1500);
-        st7789_on(&st7789_conf);
-        vTaskDelay(1500);
-    }
-}
 
 void tick(void *p)
 {
@@ -104,7 +94,6 @@ void lv_port_disp_init(void)
      * Create lvgl tasks
      * ------------------*/
 
-    xTaskCreate(powertask, "lv tick task", 2048, NULL, 1, NULL);
     xTaskCreate(tick, "lv tick task", 2048, NULL, 1, NULL);
     xTaskCreate(handle, "lv timer task", 4096, NULL, 1, NULL);
 
